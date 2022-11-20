@@ -13,9 +13,14 @@ async function findTicketTypeById(ticketTypeId: number): Promise<TicketType> {
   });
 }
 
+async function findTicketTypes(): Promise<TicketType[]> {
+  return prisma.ticketType.findMany();
+}
+
 const ticketsRepository = {
   findTicketByEnrollmentId,
   findTicketTypeById,
+  findTicketTypes,
 };
 
 export default ticketsRepository;

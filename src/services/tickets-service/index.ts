@@ -29,8 +29,14 @@ async function getTicketsByEnrollmentId(enrollmentId: number): Promise<FullTicke
   return result;
 }
 
+async function getAllTicketTypes(): Promise<TicketType[]> {
+  const ticketTypes = await ticketsRepository.findTicketTypes();
+  return ticketTypes;
+}
+
 const ticketsService = {
-  getTicketsByEnrollmentId
+  getTicketsByEnrollmentId,
+  getAllTicketTypes,
 };
 
 export default ticketsService;
