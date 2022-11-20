@@ -1,10 +1,11 @@
 import { notFoundError } from "@/errors";
+import { InsertTicket } from "@/protocols";
 import ticketsRepository from "@/repositories/ticket-repository";
 import { TicketType } from "@prisma/client";
 
 type FullTicket =  {
         id: number,
-        status: string, //RESERVED | PAID
+        status: string,
         ticketTypeId: number,
         enrollmentId: number,
         TicketType: TicketType,
@@ -34,9 +35,23 @@ async function getAllTicketTypes(): Promise<TicketType[]> {
   return ticketTypes;
 }
 
+async function insertTicket(enrollmentId: number, ticketTypeId: number) {
+  const ticket = await ticketsRepository.findTicketByEnrollmentId(enrollmentId);  
+  if(!ticket) {
+    const objectToInsert: InsertTicket = {
+      enrollmentId,
+      ticketTypeId,
+      status: "RESERVED",
+    };
+    
+    await ticketsRepository.upsertTicket(objectToInsert);
+  }
+}
+
 const ticketsService = {
   getTicketsByEnrollmentId,
   getAllTicketTypes,
+  insertTicket,
 };
 
 export default ticketsService;

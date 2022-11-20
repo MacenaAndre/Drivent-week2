@@ -1,3 +1,5 @@
+import { TicketStatus } from "@prisma/client";
+
 export type ApplicationError = {
   name: string;
   message: string;
@@ -30,3 +32,13 @@ export type RequestError = {
   message: string,
 };
 
+export type ResponseTickets = {
+  id: number,
+  enrollmentId: number,
+  ticketTypeId: number,
+  status: TicketStatus,
+  createdAt: Date,
+  updatedAt: Date,
+};
+
+export type InsertTicket = Omit<ResponseTickets, "id" | "createdAt" | "updatedAt">;

@@ -26,3 +26,18 @@ export async function getTicketTypes(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.NOT_FOUND);    
   }
 }
+
+export async function postTicket(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { ticketTypeId } = req.body;
+
+  try {
+    const enrollmentWithAddress = await enrollmentsService.getOneWithAddressByUserId(userId);
+    await ticketsService.insertTicket(enrollmentWithAddress.id, ticketTypeId);
+    const ticket = await ticketsService.getTicketsByEnrollmentId(enrollmentWithAddress.id);
+
+    res.status(httpStatus.CREATED).send(ticket);
+  } catch (error) {
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
