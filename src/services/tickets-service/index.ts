@@ -44,7 +44,7 @@ async function insertTicket(enrollmentId: number, ticketTypeId: number) {
       status: "RESERVED",
     };
     
-    await ticketsRepository.upsertTicket(objectToInsert);
+    await ticketsRepository.createTicket(objectToInsert);
   }
 }
 
