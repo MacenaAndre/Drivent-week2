@@ -32,13 +32,28 @@ export type RequestError = {
   message: string,
 };
 
-export type ResponseTickets = {
-  id: number,
+export type InsertTicket = {
   enrollmentId: number,
   ticketTypeId: number,
   status: TicketStatus,
-  createdAt: Date,
-  updatedAt: Date,
 };
 
-export type InsertTicket = Omit<ResponseTickets, "id" | "createdAt" | "updatedAt">;
+export type CardData = {
+  issuer: string,
+  number: string,
+  name: string,
+  expirationDate: string,
+  cvv: string,
+}
+
+export type BodyPayment = {
+  ticketId: number,
+  cardData: CardData,
+};
+
+export type InsertPayment = {
+  ticketId: number
+  value: number
+  cardIssuer: string,
+  cardLastDigits: string,
+}
